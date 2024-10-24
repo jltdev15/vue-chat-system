@@ -28,6 +28,7 @@
       </header>
       <!-- Chat bubbles -->
       <section
+        ref="messageList"
         class="bg-gray-50 h-[82dvh] rounded-md overflow-y-auto p-3 dark:text-gray-900"
       >
         <div
@@ -36,14 +37,14 @@
         >
           <p class="text-5xl font-bold">Start sending message</p>
         </div>
-        <ul v-else>
+        <ul v-if="props.messagesList.length">
           <li
             v-for="item in messagesList"
             :key="item._id"
             class="chat"
             :class="{
-              'chat-end': item.senderId._id == authStore.currentUser._id,
-              'chat-start': item.senderId._id !== authStore.currentUser._id,
+              'chat-end': item.senderId._id == authStore.currentUser?._id,
+              'chat-start': item.senderId._id !== authStore.currentUser?._id,
             }"
           >
             <div class="chat-bubble dark:text-gray-50">
@@ -56,11 +57,15 @@
       <div class="flex gap-3" v-if="props.selectedChat">
         <textarea
           class="w-full rounded-md dark:text-gray-800"
-          v-model="newMessage"
+          v-model.trim="newMessage"
           placeholder="Type a message"
           @keyup.enter="sendMessageHandler"
         />
-        <button class="btn-primary w-32 rounded-md font-bold text-base bg-gray-50">
+        <button
+          v-if="newMessage"
+          @click="sendMessageHandler"
+          class="btn-primary w-32 rounded-md font-bold text-base bg-gray-50 transition-all"
+        >
           Send
         </button>
       </div>
@@ -71,7 +76,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useAuthStore } from "../stores/auth";
-import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
 const emit = defineEmits(["sendMessage"]);
 const props = defineProps([
@@ -81,13 +85,15 @@ const props = defineProps([
   "receiverId",
   "senderId",
 ]);
-const route = useRoute();
-const id = ref(route.params.id || "");
 const authStore = useAuthStore();
-const { currentUser, conversationId } = storeToRefs(authStore);
+const { conversationId } = storeToRefs(authStore);
 const newMessage = ref("");
+const messageList = ref(null);
 // Send a new message using emit
 const sendMessageHandler = () => {
+  if (newMessage.value === "") {
+    return console.log("No message input");
+  }
   const message = {
     content: newMessage.value,
     conversationId: conversationId.value,
@@ -97,14 +103,4 @@ const sendMessageHandler = () => {
   emit("sendMessage", message);
   newMessage.value = "";
 };
-
-// Listen for incoming messages
-// socket.on("newMessage", (message) => {
-//   console.log("====================================");
-//   console.log(message);
-//   console.log("====================================");
-//   if (message.conversationId === id.value) {
-//     messages.value.push(message);
-//   }
-// });
 </script>

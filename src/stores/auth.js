@@ -22,15 +22,14 @@ export const useAuthStore = defineStore('auth', () => {
   const register = async (credentials) => {
     try {
       const response = await axios.post('/api/auth/register', credentials);
-      authToken.value = response.data.token;
-      currentUser.value = response.data.user;
-      localStorage.setItem('token', response.data.token);
+      console.log(response);
+
     } catch (error) {
       throw new Error(error.response.data.message);
     }
   };
 
-  const logout = () => {
+  const logout = async () => {
     authToken.value = '';
     currentUser.value = null;
     localStorage.removeItem('token');

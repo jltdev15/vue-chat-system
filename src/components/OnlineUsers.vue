@@ -1,6 +1,8 @@
 <template>
   <div class="flex flex-col gap-3 h-full">
-    <div class="bg-gray-50 rounded-md p-3 flex items-center justify-between gap-3">
+    <div
+      class="bg-gray-50 relative rounded-md p-3 flex items-center justify-between gap-3"
+    >
       <div class="flex gap-3 items-center">
         <div class="w-10 rounded-full">
           <img
@@ -10,19 +12,35 @@
           />
         </div>
         <div class="dark:text-gray-800">
-          <p class="font-bold">Juan Dela Cruz</p>
+          <p class="font-bold">{{ authStore.currentUser?.fullName }}</p>
           <p class="bg-green-600 inline-block px-2 py-1 rounded text-gray-50 text-xs">
             Admin
           </p>
         </div>
       </div>
-
-      <p
-        class="cursor-pointer dark:text-gray-50 p-2 px-3 rounded-md font-medium bg-red-600"
-        @click="logoutHandler"
+      <i
+        @click="isMenuShow = !isMenuShow"
+        class="bx bx-dots-vertical-rounded text-3xl text-gray-800 cursor-pointer"
+        :class="{ 'bg-gray-200 rounded-md': isMenuShow }"
+      ></i>
+      <div
+        v-if="isMenuShow"
+        class="absolute w-48 bg-gray-900 shadow-md bottom-[-130%] right-8 p-3 rounded-md flex flex-col"
       >
-        Sign out
-      </p>
+        <ul>
+          <li
+            class="cursor-pointer hover:bg-gray-600 flex items-center justify-between dark:text-gray-50 p-2 px-3 rounded-md font-medium"
+          >
+            Settings<i class="bx bxs-cog"></i>
+          </li>
+          <li
+            class="cursor-pointer flex items-center hover:bg-gray-600 justify-between dark:text-gray-50 p-2 px-3 rounded-md font-medium"
+            @click="logoutHandler"
+          >
+            Sign out<i class="bx bx-log-out-circle"></i>
+          </li>
+        </ul>
+      </div>
     </div>
     <ul class="bg-gray-100 h-full rounded-md p-3 flex flex-col gap-3">
       <p class="text-center" v-if="props.users.length === 0">No online users</p>
@@ -53,18 +71,19 @@
 
 <script setup>
 import { useAuthStore } from "@/stores/auth";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 const authStore = useAuthStore();
 const router = useRouter();
-const emit = defineEmits(["selectUser"]);
+const emit = defineEmits(["selectUser", "signOut"]);
 const props = defineProps(["users"]);
+const isMenuShow = ref(false);
 
 const selectUserHandler = (userId) => {
   emit("selectUser", userId);
 };
 const logoutHandler = () => {
-  authStore.logout();
-  router.push("/");
+  emit("signOut");
 };
 </script>
 

@@ -1,7 +1,11 @@
 <template>
   <div class="grid grid-cols-[25%_75%] h-dvh">
     <div class="bg-gray-800 p-2 h-full">
-      <OnlineUsers :users="currentOnlineUsers" @select-user="selectUser" />
+      <OnlineUsers
+        :users="currentOnlineUsers"
+        @select-user="selectUser"
+        @signOut="logoutHandler"
+      />
     </div>
     <div class="bg-gray-800 p-2">
       <!-- 70% width column content -->
@@ -10,8 +14,9 @@
         :selectedUserName="userFullName"
         :messagesList="messages"
         :receiverId="receiverId"
-        :senderId="authStore.currentUser._id"
+        :senderId="authStore.currentUser?._id"
         @sendMessage="sendMessage"
+        ref="chatComponent"
       />
     </div>
   </div>
@@ -20,7 +25,7 @@
 <script setup>
 import Chat from "@/components/Chat.vue";
 import OnlineUsers from "@/components/OnlineUsers.vue";
-import { ref, onMounted, computed, watch } from "vue";
+import { ref, onMounted, computed, watch, nextTick, onUnmounted } from "vue";
 import { useAuthStore } from "../stores/auth";
 import { io } from "socket.io-client";
 import axios from "axios";
@@ -37,7 +42,8 @@ const socket = io("http://localhost:3000");
 const isUserSelected = ref(false);
 const userFullName = ref(null);
 const receiverId = ref(null);
-// Fetch online users
+const chatComponent = ref(null);
+
 onMounted(async () => {
   if (authStore.currentUser) {
     socket.emit("joinRoom", {
@@ -48,7 +54,28 @@ onMounted(async () => {
     console.log(users);
     onlineUsers.value = users;
   });
+  scrollToBottom();
 });
+
+const scrollToBottom = async () => {
+  nextTick(() => {
+    const messageList = chatComponent.value?.$refs.messageList;
+    if (messageList) {
+      messageList.scrollTop = messageList.scrollHeight;
+    }
+  });
+};
+const scrollToBottomSend = async () => {
+  nextTick(() => {
+    const messageList = chatComponent.value?.$refs.messageList;
+    if (messageList) {
+      messageList.scrollTo({
+        top: messageList.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  });
+};
 // Handle user selection and conversation retrieval
 const selectUser = async (user) => {
   try {
@@ -56,14 +83,15 @@ const selectUser = async (user) => {
       userId1: authStore.currentUser._id,
       userId2: user._id,
     });
-    console.log(response);
-    console.log(response.data.conversationId);
     conversationId.value = response.data.conversationId;
     router.push({ name: "conversation-details", params: { id: conversationId.value } });
+
     await fetchMessages(conversationId.value);
+
     isUserSelected.value = true;
     receiverId.value = user._id;
     setUserFullName(user.fullName);
+    scrollToBottom();
   } catch (err) {
     console.log(err);
   }
@@ -73,8 +101,8 @@ const fetchMessages = async (conversationId) => {
     `/api/chat/conversations/${conversationId}/messages`
   );
   messages.value = messagesResponse.data;
+  scrollToBottomSend();
 };
-
 const setUserFullName = (fullName) => {
   userFullName.value = fullName;
 };
@@ -83,6 +111,7 @@ const setUserFullName = (fullName) => {
 const sendMessage = (message) => {
   socket.emit("sendMessage", message);
   fetchMessages(message.conversationId);
+
   socket.on("newMessage", async (message) => {
     if (message.conversationId === conversationId.value) {
       fetchMessages(conversationId.value);
@@ -90,8 +119,13 @@ const sendMessage = (message) => {
   });
 };
 
+const logoutHandler = async () => {
+  socket.emit("logout", authStore.currentUser._id);
+  await authStore.logout();
+  router.push({ name: "home" });
+};
 const currentOnlineUsers = computed(() => {
-  return onlineUsers.value.filter((item) => item._id !== authStore.currentUser._id);
+  return onlineUsers.value.filter((item) => item._id !== authStore.currentUser?._id);
 });
 </script>
 
