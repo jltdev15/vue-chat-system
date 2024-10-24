@@ -1,5 +1,6 @@
 <script setup>
 import TheHeader from "@/components/TheHeader.vue";
+import Footer from "@/components/Footer.vue";
 import { ref } from "vue";
 import { useAuthStore } from "../stores/auth";
 import { useRouter } from "vue-router";
@@ -13,7 +14,7 @@ const router = useRouter();
 const loginUser = async () => {
   try {
     await authStore.login({ username: username.value, password: password.value });
-    router.push("/messenger");
+    router.push({name:'messenger'});
   } catch (err) {
     error.value = err.message;
   }
@@ -22,18 +23,12 @@ const loginUser = async () => {
 
 <template>
   <TheHeader />
-  <div class="flex flex-col justify-center flex-1 min-h-full px-6 py-12 lg:px-8">
+  <div class="flex flex-col items-center justify-center flex-1 px-6 py-12 h-[70dvh]  lg:px-8">
+    <i class='text-[12rem] bx bx-message-square-dots' ></i>
     <div class="text-center sm:mx-auto sm:w-full sm:max-w-sm">
-      <h2
-        class="mt-6 text-2xl font-bold leading-9 tracking-tight text-center text-gray-900 dark:text-gray-50"
-      >
-        Sign in to get the latest chismiss!
-      </h2>
-      <i class="bx bx-user"></i>
-      <i class="bx bxl-facebook-square"></i>
     </div>
 
-    <div class="mt-6 sm:mx-auto sm:w-full sm:max-w-sm">
+    <div class="w-full mt-6 sm:mx-auto sm:max-w-sm">
       <form @submit.prevent="loginUser" class="space-y-6" action="#" method="POST">
         <div>
           <label
@@ -86,7 +81,7 @@ const loginUser = async () => {
         <div>
           <button
             type="submit"
-            class="flex w-full justify-center rounded-md bg-gray-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             Sign in
           </button>
@@ -104,4 +99,5 @@ const loginUser = async () => {
       </p>
     </div>
   </div>
+  <Footer />
 </template>

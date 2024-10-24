@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { useAuthStore } from "../stores/auth";
 import { useRouter } from "vue-router";
 import TheHeader from "@/components/TheHeader.vue";
+import Footer from "@/components/Footer.vue";
 const fullName = ref("");
 const username = ref("");
 const password = ref("");
@@ -26,16 +27,18 @@ const registerUser = async () => {
 
 <template>
   <TheHeader />
-  <div class="flex flex-col justify-center flex-1 min-h-full px-6 py-12 lg:px-8">
+  <div class="flex flex-col items-center justify-center h-[80dvh] flex-1 min-h-full px-6 py-12 lg:px-8">
     <div class="text-center sm:mx-auto sm:w-full sm:max-w-sm">
+      <i class='text-[12rem] bx bx-message-square-dots' ></i>
       <h2
-        class="mt-6 text-2xl font-bold leading-9 tracking-tight text-center text-gray-900 dark:text-gray-50"
+        class="text-2xl font-bold leading-9 tracking-tight text-center text-gray-900 dark:text-gray-50"
       >
         Create an account
       </h2>
+
     </div>
 
-    <div class="mt-6 sm:mx-auto sm:w-full sm:max-w-sm">
+    <div class="w-full mt-6 sm:mx-auto sm:max-w-sm">
       <form @submit.prevent="registerUser" class="space-y-3" action="#" method="POST">
         <div>
           <div class="flex items-center justify-between">
@@ -105,9 +108,9 @@ const registerUser = async () => {
         <div class="pt-3">
           <button
             type="submit"
-            class="flex w-full justify-center rounded-md bg-gray-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            Create ChatMis Account
+            Create ChissMaxx account
           </button>
         </div>
       </form>
@@ -116,11 +119,13 @@ const registerUser = async () => {
         Already member?
         {{ " " }}
         <router-link
-          :to="{ name: 'home' }"
+          :to="{ name: 'login' }"
           class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
           >Login</router-link
         >
       </p>
     </div>
+
   </div>
+  <Footer />
 </template>

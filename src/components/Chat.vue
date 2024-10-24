@@ -7,13 +7,13 @@
     >
       <div>
         <p class="text-5xl font-bold">Select Conversation</p>
-        <p class="text-center py-2 font-medium text-gray-400">No selected conversation</p>
+        <p class="py-2 font-medium text-center text-gray-400">No selected conversation</p>
       </div>
     </div>
     <!-- Header showing the name of selected user -->
     <div v-if="props.selectedChat" class="flex flex-col gap-3">
       <header
-        class="flex items-center gap-3 shadow-md bg-gray-200 rounded-md p-4 justify-between"
+        class="flex items-center justify-between gap-3 p-4 bg-gray-200 rounded-md shadow-md"
       >
         <div class="flex items-center gap-3">
           <div class="w-10 rounded-full">
@@ -23,7 +23,7 @@
               src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
             />
           </div>
-          <p class="font-bold text-xl text-gray-800">{{ props.selectedUserName }}</p>
+          <p class="text-xl font-bold text-gray-800">{{ props.selectedUserName }}</p>
         </div>
       </header>
       <!-- Chat bubbles -->
@@ -32,7 +32,7 @@
         class="bg-gray-50 h-[82dvh] rounded-md overflow-y-auto p-3 dark:text-gray-900"
       >
         <div
-          class="h-full flex justify-center items-center"
+          class="flex items-center justify-center h-full"
           v-if="props.messagesList.length === 0"
         >
           <p class="text-5xl font-bold">Start sending message</p>
@@ -58,13 +58,13 @@
         <textarea
           class="w-full rounded-md dark:text-gray-800"
           v-model.trim="newMessage"
-          placeholder="Type a message"
+          placeholder="Aa"
           @keyup.enter="sendMessageHandler"
         />
         <button
           v-if="newMessage"
           @click="sendMessageHandler"
-          class="btn-primary w-32 rounded-md font-bold text-base bg-gray-50 transition-all"
+          class="w-32 text-base font-bold transition-all bg-indigo-500 rounded-md text-gray-50 btn-primary"
         >
           Send
         </button>

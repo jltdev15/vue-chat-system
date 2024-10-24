@@ -1,14 +1,13 @@
 <template>
-  <div class="">
-    <header class="p-6 bg-black">
-      <nav class="w-9/12 mx-auto text-gray-50">
+
+    <header class="p-6 bg-neutral">
+      <nav class="mx-auto text-gray-50">
         <div class="text-center">
-          <p class="text-5xl font-bold">ChatMis</p>
-          <p class="text-sm text-gray-200">Spread the news</p>
+          <p class="flex items-center justify-center gap-3 text-5xl font-bold">ChissMaxx <i class='bx bx-game' ></i></p>
+          <p class="text-sm text-gray-200">Your tsismis chat application. Start you chismiss adventure now!</p>
         </div>
       </nav>
     </header>
-  </div>
 </template>
 
 <script setup>

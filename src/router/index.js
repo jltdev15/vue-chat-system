@@ -1,13 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import Login from '../views/LoginView.vue'
 import { useAuthStore } from '../stores/auth';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: HomeView
+      path: '/auth',
+      name: 'login',
+      component: Login
     },
     {
       path: '/registration',
@@ -20,13 +20,13 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue')
     }, 
     {
-      path:'/messenger',
+      path:'/',
       name:'messenger',
       component: () => import('../views/Dashboard.vue'),
       meta: { requiresAuth: true },
     },
     {
-      path:'/messenger/:id',
+      path:'/:id',
       name:'conversation-details',
       meta: { requiresAuth: true },
       component: () => import('../views/Dashboard.vue'),
@@ -42,7 +42,7 @@ router.beforeEach((to, from, next) => {
 
   // If the route requires authentication and the user is not authenticated
   if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
-    return next({ name: 'home' });
+    return next({ name: 'login' });
   }
 
   // If user is authenticated and tries to access the login page, redirect to chat

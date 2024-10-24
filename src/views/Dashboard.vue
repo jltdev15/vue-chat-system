@@ -1,13 +1,14 @@
 <template>
   <div class="grid grid-cols-[25%_75%] h-dvh">
-    <div class="bg-gray-800 p-2 h-full">
+    <div class="h-full p-2 bg-indigo-600">
       <OnlineUsers
         :users="currentOnlineUsers"
         @select-user="selectUser"
         @signOut="logoutHandler"
+        :selectedUser="receiverId"
       />
     </div>
-    <div class="bg-gray-800 p-2">
+    <div class="p-2 bg-gray-50">
       <!-- 70% width column content -->
       <Chat
         :selectedChat="isUserSelected"
@@ -122,7 +123,7 @@ const sendMessage = (message) => {
 const logoutHandler = async () => {
   socket.emit("logout", authStore.currentUser._id);
   await authStore.logout();
-  router.push({ name: "home" });
+  router.push({ name: "login" });
 };
 const currentOnlineUsers = computed(() => {
   return onlineUsers.value.filter((item) => item._id !== authStore.currentUser?._id);
