@@ -1,25 +1,21 @@
 <template>
-  <div class="grid grid-cols-[25%_75%] h-dvh">
-    <div class="h-full p-2 bg-indigo-600">
-      <OnlineUsers
-        :users="currentOnlineUsers"
-        @select-user="selectUser"
-        @signOut="logoutHandler"
-        :selectedUser="receiverId"
-      />
-    </div>
-    <div class="p-2 bg-gray-50">
-      <!-- 70% width column content -->
-      <Chat
-        :selectedChat="isUserSelected"
-        :selectedUserName="userFullName"
-        :messagesList="messages"
-        :receiverId="receiverId"
-        :senderId="authStore.currentUser?._id"
-        @sendMessage="sendMessage"
-        ref="chatComponent"
-      />
-    </div>
+  <div class="grid grid-cols-[25%_75%] h-dvh bg-gray-50">
+    <OnlineUsers
+      :users="currentOnlineUsers"
+      @select-user="selectUser"
+      @signOut="logoutHandler"
+      :selectedUser="receiverId"
+    />
+    <!-- 70% width column content -->
+    <Chat
+      :selectedChat="isUserSelected"
+      :selectedUserName="userFullName"
+      :messagesList="messages"
+      :receiverId="receiverId"
+      :senderId="authStore.currentUser?._id"
+      @sendMessage="sendMessage"
+      ref="chatComponent"
+    />
   </div>
 </template>
 
@@ -112,13 +108,14 @@ const setUserFullName = (fullName) => {
 const sendMessage = (message) => {
   socket.emit("sendMessage", message);
   fetchMessages(message.conversationId);
-
-  socket.on("newMessage", async (message) => {
-    if (message.conversationId === conversationId.value) {
-      fetchMessages(conversationId.value);
-    }
-  });
 };
+socket.on("newMessage", async (message) => {
+  console.log(message);
+
+  if (message.conversationId === conversationId.value) {
+    fetchMessages(conversationId.value);
+  }
+});
 
 const logoutHandler = async () => {
   socket.emit("logout", authStore.currentUser._id);

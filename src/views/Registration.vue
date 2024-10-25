@@ -27,15 +27,16 @@ const registerUser = async () => {
 
 <template>
   <TheHeader />
-  <div class="flex flex-col items-center justify-center h-[80dvh] flex-1 min-h-full px-6 py-12 lg:px-8">
+  <div
+    class="flex flex-col items-center justify-center md:h-[70dvh] flex-1 min-h-full px-6 py-6 lg:px-8"
+  >
     <div class="text-center sm:mx-auto sm:w-full sm:max-w-sm">
-      <i class='text-[12rem] bx bx-message-square-dots' ></i>
+      <i class="text-[12rem] bx bx-message-square-dots"></i>
       <h2
         class="text-2xl font-bold leading-9 tracking-tight text-center text-gray-900 dark:text-gray-50"
       >
         Create an account
       </h2>
-
     </div>
 
     <div class="w-full mt-6 sm:mx-auto sm:max-w-sm">
@@ -125,7 +126,6 @@ const registerUser = async () => {
         >
       </p>
     </div>
-
   </div>
   <Footer />
 </template>

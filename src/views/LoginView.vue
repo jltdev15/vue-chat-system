@@ -14,7 +14,7 @@ const router = useRouter();
 const loginUser = async () => {
   try {
     await authStore.login({ username: username.value, password: password.value });
-    router.push({name:'messenger'});
+    router.push({ name: "messenger" });
   } catch (err) {
     error.value = err.message;
   }
@@ -23,10 +23,11 @@ const loginUser = async () => {
 
 <template>
   <TheHeader />
-  <div class="flex flex-col items-center justify-center flex-1 px-6 py-12 h-[70dvh]  lg:px-8">
-    <i class='text-[12rem] bx bx-message-square-dots' ></i>
-    <div class="text-center sm:mx-auto sm:w-full sm:max-w-sm">
-    </div>
+  <div
+    class="flex flex-col items-center justify-center flex-1 px-6 py-12 md:h-[70dvh] lg:px-8"
+  >
+    <i class="text-[12rem] bx bx-message-square-dots"></i>
+    <div class="text-center sm:mx-auto sm:w-full sm:max-w-sm"></div>
 
     <div class="w-full mt-6 sm:mx-auto sm:max-w-sm">
       <form @submit.prevent="loginUser" class="space-y-6" action="#" method="POST">

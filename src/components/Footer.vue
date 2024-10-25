@@ -1,27 +1,30 @@
 <template>
-    <footer class="fixed bottom-0 items-center p-4 footer bg-neutral text-neutral-content place-items-center md:place-items-start gap-y-0 sm:gap-y-6">
-        <aside class="items-center grid-flow-col">
-            <i class='text-3xl bx bx-message-square-dots' ></i>
-          <p>Copyright © {{new Date().getFullYear()}} - All right reserved</p>
-        </aside>
-        <nav class="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
-            <div class="flex gap-3">
-                <p>Technology Guru Solutions</p>
-                <a class="" href="https://www.facebook.com/technologyguruph/" target="_blank">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      class="fill-current">
-                      <path
-                        d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path>
-                    </svg>
-                  </a> 
-                  
-            </div>
-     
-          <!-- <a>
+  <footer
+    class="fixed bottom-0 items-center p-1 md:p-4 footer bg-neutral text-neutral-content place-items-center md:place-items-start gap-y-0 sm:gap-y-6"
+  >
+    <aside class="items-center grid-flow-col">
+      <i class="text-3xl bx bx-message-square-dots"></i>
+      <p>Copyright © {{ new Date().getFullYear() }} - All right reserved</p>
+    </aside>
+    <nav class="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
+      <div class="flex gap-3">
+        <p>Technology Guru Solutions</p>
+        <a class="" href="https://www.facebook.com/technologyguruph/" target="_blank">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            class="fill-current"
+          >
+            <path
+              d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"
+            ></path>
+          </svg>
+        </a>
+      </div>
+
+      <!-- <a>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -54,15 +57,10 @@
                 d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path>
             </svg>
           </a> -->
-        </nav>
-      </footer>
+    </nav>
+  </footer>
 </template>
 
-<script setup>
+<script setup></script>
 
-</script>
-
-<style lang="scss" scoped>
-
-
-</style>
+<style lang="scss" scoped></style>
