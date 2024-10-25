@@ -1,14 +1,14 @@
 <template>
   <div class="bg-indigo-700">
     <div
-      class="relative shadow-md flex items-center justify-between gap-3 p-3 bg-indigo-600"
+      class="relative flex items-center justify-between gap-3 p-3 bg-indigo-600 shadow-md"
     >
       <div class="flex items-center gap-3">
         <div class="w-10 rounded-full">
           <img
             class="rounded-full"
             alt="Tailwind CSS chat bubble component"
-            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                     src="https://storage.cloud.google.com/chissmax-avatar/2x2.jpg"
           />
         </div>
         <div class="dark:text-gray-50 text-gray-50">
@@ -42,7 +42,7 @@
         </ul>
       </div>
     </div>
-    <ul class="flex flex-col gap-3 bg-indigo-700 rounded-md p-6">
+    <ul class="flex flex-col gap-3 p-6 bg-indigo-700 rounded-md">
       <p class="text-center" v-if="props.users.length === 0">No online users</p>
       <li
         :class="{ 'bg-indigo-500': props.selectedUser === user._id }"

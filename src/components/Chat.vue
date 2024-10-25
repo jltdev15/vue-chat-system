@@ -1,9 +1,9 @@
 <template>
-  <div class="h-dvh p-3">
+  <div class="px-3 pt-2 h-dvh">
     <!-- Show only when the user not select a conversation -->
     <div
       v-if="!props.selectedChat"
-      class="h-full justify-center flex items-center bg-gray-200 rounded-md"
+      class="flex items-center justify-center h-full bg-gray-200 rounded-md"
     >
       <div>
         <p class="text-5xl font-bold">Select Conversation</p>
@@ -13,7 +13,7 @@
     <!-- Header showing the name of selected user -->
     <div
       v-if="props.selectedChat"
-      class="flex flex-col bg-gray-200 rounded-md h-[98dvh] overflow-hidden"
+      class="flex flex-col bg-gray-200 shadow-xl rounded-xl h-[99dvh] overflow-hidden"
     >
       <header class="flex items-center justify-between gap-3 p-3 bg-indigo-700 shadow-md">
         <div class="flex items-center gap-3">
@@ -21,19 +21,19 @@
             <img
               class="rounded-full"
               alt="Tailwind CSS chat bubble component"
-              src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+              src="https://storage.cloud.google.com/chissmax-avatar/2x2.jpg"
             />
           </div>
           <p class="text-xl font-bold text-gray-50">{{ props.selectedUserName }}</p>
         </div>
-        <div class="text-2xl flex gap-4 text-gray-50">
+        <div class="flex gap-4 text-2xl text-gray-50">
           <i class="bx bx-phone"></i>
           <i class="bx bx-video"></i>
           <i class="bx bx-info-circle"></i>
         </div>
       </header>
       <!-- Chat bubbles -->
-      <section ref="messageList" class="overflow-y-auto h-full p-3 dark:text-gray-900">
+      <section ref="messageList" class="h-full p-3 overflow-y-auto dark:text-gray-900">
         <div
           class="flex items-center justify-center h-full"
           v-if="props.messagesList.length === 0"
@@ -44,29 +44,29 @@
           <li
             v-for="item in messagesList"
             :key="item._id"
-            class="chat flex flex-col px-3"
+            class="flex flex-col px-3 chat"
             :class="{
               'chat-end': item.senderId._id == authStore.currentUser?._id,
               'chat-start': item.senderId._id !== authStore.currentUser?._id,
             }"
           >
-            <div class="chat-bubble bg-indigo-900 dark:text-gray-50">
+            <div class="bg-indigo-900 chat-bubble dark:text-gray-50">
               {{ item.content }}
             </div>
-            <p class="text-xs text-gray-600">{{ format(item.createdAt) }}</p>
+            <p class="text-[0.8rem] text-gray-600">{{ format(item.createdAt) }}</p>
           </li>
         </ul>
       </section>
       <!-- Input box -->
-      <div class="flex gap-3 p-3" v-if="props.selectedChat">
+      <div class="flex gap-3 p-3 mt-3 bg-indigo-900 " v-if="props.selectedChat">
         <textarea
-          class="w-full rounded-xl dark:text-gray-800 h-12 resize-none border border-gray-300 overflow-hidden"
+          class="w-full h-12 overflow-hidden border-0 resize-none rounded-xl dark:text-gray-800"
           v-model.trim="newMessage"
           placeholder="Aa"
           @keyup.enter="sendMessageHandler"
         />
         <button v-if="newMessage" @click="sendMessageHandler" class="flex items-center">
-          <i class="bx bxs-send text-4xl text-indigo-500"></i>
+          <i class="text-4xl text-indigo-200 bx bxs-send"></i>
         </button>
       </div>
     </div>
