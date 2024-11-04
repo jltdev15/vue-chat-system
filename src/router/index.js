@@ -20,17 +20,24 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue')
     }, 
     {
-      path:'/',
-      name:'messenger',
-      component: () => import('../views/Dashboard.vue'),
+      path: '/',
+      name: "messenger",
       meta: { requiresAuth: true },
+      component: () => import('../views/Dashboard.vue'),
     },
     {
-      path:'/:id',
-      name:'conversation-details',
+      path: '/:id',
+      name: 'conversation-details',
       meta: { requiresAuth: true },
       component: () => import('../views/Dashboard.vue'),
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      meta: { requiresAuth: true },
+      component: () => import('../views/ProfileView.vue'),
     }
+
   ]
 })
 // Global navigation guard for protected routes and login restriction
@@ -46,7 +53,7 @@ router.beforeEach((to, from, next) => {
   }
 
   // If user is authenticated and tries to access the login page, redirect to chat
-  if (to.name === 'home' && isAuthenticated) {
+  if (to.name === 'login' && isAuthenticated) {
     return next({ name: 'messenger' });
   }
 

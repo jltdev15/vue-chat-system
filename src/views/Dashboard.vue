@@ -7,6 +7,7 @@
       :selectedUser="receiverId"
     />
     <!-- 70% width column content -->
+
     <Chat
       :selectedChat="isUserSelected"
       :selectedUserName="userFullName"
@@ -51,7 +52,6 @@ onMounted(async () => {
     console.log(users);
     onlineUsers.value = users;
   });
-  scrollToBottom();
 });
 
 const scrollToBottom = async () => {
@@ -88,7 +88,7 @@ const selectUser = async (user) => {
     isUserSelected.value = true;
     receiverId.value = user._id;
     setUserFullName(user.fullName);
-    scrollToBottom();
+    await scrollToBottom();
   } catch (err) {
     console.log(err);
   }
@@ -110,8 +110,6 @@ const sendMessage = (message) => {
   fetchMessages(message.conversationId);
 };
 socket.on("newMessage", async (message) => {
-  console.log(message);
-
   if (message.conversationId === conversationId.value) {
     fetchMessages(conversationId.value);
   }

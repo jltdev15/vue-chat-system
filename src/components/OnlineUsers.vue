@@ -1,47 +1,6 @@
 <template>
   <div class="bg-indigo-700">
-    <div
-      class="relative flex items-center justify-between gap-3 p-3 bg-indigo-600 shadow-md"
-    >
-      <div class="flex items-center gap-3">
-        <div class="w-10 rounded-full">
-          <img
-            class="rounded-full"
-            alt="Tailwind CSS chat bubble component"
-                     src="https://storage.cloud.google.com/chissmax-avatar/2x2.jpg"
-          />
-        </div>
-        <div class="dark:text-gray-50 text-gray-50">
-          <p class="font-bold">{{ authStore.currentUser?.fullName }}</p>
-          <p class="inline-block py-1 text-xs underline rounded text-gray-50">
-            Set Visibility
-          </p>
-        </div>
-      </div>
-      <i
-        @click="isMenuShow = !isMenuShow"
-        class="text-3xl cursor-pointer text-gray-50 bx bx-dots-vertical-rounded"
-        :class="{ 'bg-indigo-400 rounded-md': isMenuShow }"
-      ></i>
-      <div
-        :class="{ 'opacity-100 z-[9999]  translate-y-[20%] ': isMenuShow }"
-        class="absolute flex flex-col w-48 z-[-999] opacity-0 p-3 ease-in-out delay-50 transition duration-100 bottom-[-100%] bg-gray-900 rounded-md shadow-md right-3"
-      >
-        <ul class="text-sm">
-          <li
-            class="flex items-center justify-between p-2 px-3 font-medium rounded-md cursor-pointer hover:bg-gray-600 dark:text-gray-50"
-          >
-            Settings<i class="bx bxs-cog"></i>
-          </li>
-          <li
-            class="flex items-center justify-between p-2 px-3 font-medium rounded-md cursor-pointer hover:bg-gray-600 dark:text-gray-50"
-            @click="logoutHandler"
-          >
-            Sign out<i class="bx bx-log-out-circle"></i>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <UserHeader @sign-out="logoutHandler" />
     <ul class="flex flex-col gap-3 p-6 bg-indigo-700 rounded-md">
       <p class="text-center" v-if="props.users.length === 0">No online users</p>
       <li
@@ -75,14 +34,10 @@
 </template>
 
 <script setup>
-import { useAuthStore } from "@/stores/auth";
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-const authStore = useAuthStore();
-const router = useRouter();
+import UserHeader from "./UserHeader.vue";
+
 const emit = defineEmits(["selectUser", "signOut"]);
 const props = defineProps(["users", "selectedUser"]);
-const isMenuShow = ref(false);
 
 const selectUserHandler = (userId) => {
   emit("selectUser", userId);

@@ -21,7 +21,7 @@
             <img
               class="rounded-full"
               alt="Tailwind CSS chat bubble component"
-              src="https://storage.cloud.google.com/chissmax-avatar/2x2.jpg"
+              src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
             />
           </div>
           <p class="text-xl font-bold text-gray-50">{{ props.selectedUserName }}</p>
@@ -58,7 +58,7 @@
         </ul>
       </section>
       <!-- Input box -->
-      <div class="flex gap-3 p-3 mt-3 bg-indigo-900 " v-if="props.selectedChat">
+      <div class="flex gap-3 p-3 mt-3 bg-indigo-900" v-if="props.selectedChat">
         <textarea
           class="w-full h-12 overflow-hidden border-0 resize-none rounded-xl dark:text-gray-800"
           v-model.trim="newMessage"
