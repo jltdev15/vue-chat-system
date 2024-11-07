@@ -14,6 +14,7 @@
       :messagesList="messages"
       :receiverId="receiverId"
       :senderId="authStore.currentUser?._id"
+      :selectedUserImage="imageUrl"
       @sendMessage="sendMessage"
       ref="chatComponent"
     />
@@ -39,6 +40,7 @@ const newMessage = ref("");
 const socket = io("http://localhost:3000");
 const isUserSelected = ref(false);
 const userFullName = ref(null);
+const imageUrl = ref(null);
 const receiverId = ref(null);
 const chatComponent = ref(null);
 
@@ -87,7 +89,7 @@ const selectUser = async (user) => {
 
     isUserSelected.value = true;
     receiverId.value = user._id;
-    setUserFullName(user.fullName);
+    setUserFullName(user.fullName, user.profileImageUrl);
     await scrollToBottom();
   } catch (err) {
     console.log(err);
@@ -100,8 +102,9 @@ const fetchMessages = async (conversationId) => {
   messages.value = messagesResponse.data;
   scrollToBottomSend();
 };
-const setUserFullName = (fullName) => {
+const setUserFullName = (fullName, imgUrl) => {
   userFullName.value = fullName;
+  imageUrl.value = imgUrl;
 };
 
 // // Send a new message

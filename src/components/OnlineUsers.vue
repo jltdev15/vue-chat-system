@@ -12,10 +12,15 @@
         @click="selectUserHandler(user)"
       >
         <div class="relative w-10 rounded-full">
-          <img
+          <!-- <img
             class="rounded-full"
             alt="Tailwind CSS chat bubble component"
             src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+          /> -->
+          <img
+            class="rounded-full"
+            alt="Tailwind CSS chat bubble component"
+            :src="user.profileImageUrl"
           />
           <p
             :class="{

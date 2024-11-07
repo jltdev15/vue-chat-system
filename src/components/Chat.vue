@@ -18,10 +18,15 @@
       <header class="flex items-center justify-between gap-3 p-3 bg-indigo-700 shadow-md">
         <div class="flex items-center gap-3">
           <div class="w-10 rounded-full">
-            <img
+            <!-- <img
               class="rounded-full"
               alt="Tailwind CSS chat bubble component"
               src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+            /> -->
+            <img
+              class="rounded-full"
+              alt="Tailwind CSS chat bubble component"
+              :src="props.selectedUserImage"
             />
           </div>
           <p class="text-xl font-bold text-gray-50">{{ props.selectedUserName }}</p>
@@ -58,7 +63,7 @@
         </ul>
       </section>
       <!-- Input box -->
-      <div class="flex gap-3 p-3 mt-3 bg-indigo-900" v-if="props.selectedChat">
+      <div class="flex gap-3 p-3 mt-3" v-if="props.selectedChat">
         <textarea
           class="w-full h-12 overflow-hidden border-0 resize-none rounded-xl dark:text-gray-800"
           v-model.trim="newMessage"
@@ -66,7 +71,7 @@
           @keyup.enter="sendMessageHandler"
         />
         <button v-if="newMessage" @click="sendMessageHandler" class="flex items-center">
-          <i class="text-4xl text-indigo-200 bx bxs-send"></i>
+          <i class="text-4xl text-indigo-900 bx bxs-send"></i>
         </button>
       </div>
     </div>
@@ -85,6 +90,7 @@ const props = defineProps([
   "messagesList",
   "receiverId",
   "senderId",
+  "selectedUserImage",
 ]);
 const authStore = useAuthStore();
 const { conversationId } = storeToRefs(authStore);
